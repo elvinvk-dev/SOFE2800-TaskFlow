@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow - Task Manager</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/tasks.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <h1>TaskFlow</h1>
+        <p>Keep track of your tasks and deadlines</p>
+    </header>
+
+    <main>
+
+        <!-- Dashboard section -->
+        <section class="dashboard">
+            <h2>My Dashboard</h2>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Total Tasks</h3>
+                    <p id="totalTasks">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Completed</h3>
+                    <p id="completedTasks">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Pending</h3>
+                    <p id="pendingTasks">0</p>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <h3>Task Progress</h3>
+
+                <div class="progress-bar">
+                    <div id="progressFill"></div>
+                </div>
+
+                <p id="progressText">0% Completed</p>
+            </div>
+        </section>
+
+        <!-- Add task section -->
+        <section class="task-section">
+
+            <h2>Add a New Task</h2>
+
+            <form id="taskForm">
+
+                <input
+                    type="text"
+                    id="taskInput"
+                    placeholder="Enter task name"
+                    required
+                >
+
+                <select id="taskCategory">
+                    <option value="School">School</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Work">Work</option>
+                </select>
+
+                <input
+                    type="date"
+                    id="taskDeadline"
+                    required
+                >
+
+                <button type="submit">Add Task</button>
+            </form>
+
+            <!-- Task filters -->
+            <div class="task-heading">
+                <h2>My Tasks</h2>
+
+                <div class="filters">
+                    <button type="button" class="active"
+                            data-filter="all">
+                        All
+                    </button>
+
+                    <button type="button" data-filter="pending">
+                        Pending
+                    </button>
+
+                    <button type="button" data-filter="completed">
+                        Completed
+                    </button>
+                </div>
+            </div>
+
+            <ul id="taskList"></ul>
+
+            <p id="emptyMessage">No tasks to display.</p>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>TaskFlow | SOFE 2800 Web Programming</p>
+    </footer>
+
+</body>
+</html>
