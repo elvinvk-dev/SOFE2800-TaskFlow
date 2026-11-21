@@ -72,6 +72,8 @@ function displayTasks() {
     filteredTasks.forEach(task => {
         const li = document.createElement("li");
         li.className = "task-item";
+        li.dataset.deadline = task.deadline;
+        li.dataset.completed = task.completed;
 
         if (task.completed) {
             li.classList.add("completed");
