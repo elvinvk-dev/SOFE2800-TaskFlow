@@ -8,16 +8,29 @@ const taskDeadline = document.getElementById("taskDeadline");
 const taskList = document.getElementById("taskList");
 const emptyMessage = document.getElementById("emptyMessage");
 
-// Load saved tasks from localStorage
-let tasks = JSON.parse(localStorage.getItem("taskflowTasks") || "[]");
+// Tasks now come from the database
+let tasks = [];
+
+// Get this user's tasks from list.php
+async function loadTasks() {
+    const response = await fetch("tasks/list.php");
+    const data = await response.json();
+
+    if (data.success) {
+        tasks = data.tasks.map(task => ({
+            ...task,
+            completed: task.status === "completed"
+        }));
+    }
+
+    displayTasks();
+}
+
+// Nothing to save in the browser anymore
+function saveTasks() {}
 
 // Current filter
 let currentFilter = "all";
-
-// Save tasks
-function saveTasks() {
-    localStorage.setItem("taskflowTasks", JSON.stringify(tasks));
-}
 
 // Update dashboard statistics
 function updateDashboard() {
@@ -88,7 +101,7 @@ function displayTasks() {
 
         const details = document.createElement("small");
         details.textContent =
-            task.category + " | Due: " + task.deadline;
+            (task.category || "No category") +  " | Due: " + (task.deadline || "No dealine");
 
         info.appendChild(title);
         info.appendChild(details);
@@ -143,7 +156,7 @@ function displayTasks() {
 }
 
 // Add a task
-taskForm.addEventListener("submit", function(event) {
+taskForm.addEventListener("submit", async function(event) {
     event.preventDefault();
 
     let title = taskInput.value.trim();
@@ -155,31 +168,38 @@ taskForm.addEventListener("submit", function(event) {
         return;
     }
 
-    let newTask = {
-        id: crypto.randomUUID(),
-        title: title,
-        category: category,
-        deadline: deadline,
-        completed: false
-    };
-
-    tasks.push(newTask);
-
-    saveTasks();
-    displayTasks();
+   const response = await fetch("tasks/add.php",{
+    method: "POST",
+    headers :{"Content-Type": "application/json"},
+    body: JSON.stringify({title: title, category: category, deadline: deadline})
+    })
+     const data = await response.json();
+    if(!data.success){
+        alert(data.message);
+        return;
+    }
+    loadTasks();
+   
 
     taskForm.reset();
 });
 
 // Mark task completed or pending
-function toggleTask(id) {
-    let task = tasks.find(task => task.id === id);
+// Mark task completed or pending (saved in the database)
+async function toggleTask(id) {
+    const response = await fetch("tasks/complete.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: id })
+    });
+    const data = await response.json();
 
-    if (task) {
-        task.completed = !task.completed;
-        saveTasks();
-        displayTasks();
+    if (!data.success) {
+        alert(data.message);
+        return;
     }
+
+    loadTasks();
 }
 
 // Edit an existing task
@@ -239,4 +259,4 @@ filterButtons.forEach(button => {
 });
 
 // Display saved tasks when the page opens
-displayTasks();
+loadTasks();
