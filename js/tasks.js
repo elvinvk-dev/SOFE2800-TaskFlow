@@ -203,7 +203,8 @@ async function toggleTask(id) {
 }
 
 // Edit an existing task
-function editTask(id) {
+// Edit an existing task (saved in the database)
+async function editTask(id) {
     let task = tasks.find(task => task.id === id);
 
     if (!task) {
@@ -223,22 +224,43 @@ function editTask(id) {
         return;
     }
 
-    task.title = newTitle;
+    const response = await fetch("tasks/edit.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: id, title: newTitle })
+    });
+    const data = await response.json();
 
-    saveTasks();
-    displayTasks();
+    if (!data.success) {
+        alert(data.message);
+        return;
+    }
+
+    loadTasks();
 }
 
 // Delete a task
-function deleteTask(id) {
+// Delete a task (from the database)
+async function deleteTask(id) {
     let confirmDelete = confirm("Are you sure you want to delete this task?");
 
-    if (confirmDelete) {
-        tasks = tasks.filter(task => task.id !== id);
-
-        saveTasks();
-        displayTasks();
+    if (!confirmDelete) {
+        return;
     }
+
+    const response = await fetch("tasks/delete.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: id })
+    });
+    const data = await response.json();
+
+    if (!data.success) {
+        alert(data.message);
+        return;
+    }
+
+    loadTasks();
 }
 
 // Filter buttons
