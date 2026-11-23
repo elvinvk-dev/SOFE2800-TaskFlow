@@ -1,4 +1,11 @@
+<?php
+require_once __DIR__ . '/includes/auth.php';
 
+if (!isLoggedIn()) {
+    header('Location: login.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +16,6 @@
 
     <link rel="stylesheet" href="css/style.css">
     <script src="js/tasks.js" defer></script>
-    <script src="js/reminders.js" defer></script>
 </head>
 <body>
 
