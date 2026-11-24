@@ -141,11 +141,3 @@ function reminderRefresh() {
 document.addEventListener("DOMContentLoaded", function () {
     reminderRefresh();
 });
-
-document.addEventListener("click", function () {
-    reminderRefresh();
-});
-
-document.addEventListener("submit", function () {
-    reminderRefresh();
-});
