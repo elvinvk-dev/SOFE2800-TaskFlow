@@ -24,6 +24,9 @@ async function loadTasks() {
     }
 
     displayTasks();
+    if (typeof reminderRefresh === "function") {
+        reminderRefresh();
+    }    
 }
 
 // Nothing to save in the browser anymore
