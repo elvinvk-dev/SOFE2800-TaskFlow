@@ -16,6 +16,7 @@ if (!isLoggedIn()) {
 
     <link rel="stylesheet" href="css/style.css">
     <script src="js/tasks.js" defer></script>
+    <script src="js/reminders.js" defer></script
 </head>
 <body>
 
