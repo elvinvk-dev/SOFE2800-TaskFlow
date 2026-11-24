@@ -15,6 +15,7 @@ if (!isLoggedIn()) {
     <title>TaskFlow - Task Manager</title>
 
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
     <script src="js/tasks.js" defer></script>
     <script src="js/reminders.js" defer></script
 </head>
