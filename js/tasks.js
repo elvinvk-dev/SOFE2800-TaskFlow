@@ -24,16 +24,15 @@ async function loadTasks() {
     }
 
     displayTasks();
-    if (typeof reminderRefresh === "function") {
-        reminderRefresh();
-    }    
+      
 }
 
 // Nothing to save in the browser anymore
 function saveTasks() {}
 
 // Current filter
-let currentFilter = "all";
+let currentFilter ="all";
+let currentCategory = "all";
 
 // Update dashboard statistics
 function updateDashboard() {
@@ -67,14 +66,17 @@ function displayTasks() {
 
     // Filter tasks based on selected filter
     let filteredTasks = tasks.filter(task => {
+        if (currentCategory !== "all" && task.category !==currentCategory) {
+            return false;
+        }
+
         if (currentFilter === "completed") {
             return task.completed;
         }
-
-        if (currentFilter === "pending") {
+        
+        if (currentFilter === "pending"){
             return !task.completed;
         }
-
         return true;
     });
 
@@ -104,7 +106,7 @@ function displayTasks() {
 
         const details = document.createElement("small");
         details.textContent =
-            (task.category || "No category") +  " | Due: " + (task.deadline || "No dealine");
+            (task.category || "No category") +  " | Due: " + (task.deadline || "No deadline");
 
         info.appendChild(title);
         info.appendChild(details);
@@ -156,6 +158,11 @@ function displayTasks() {
     });
 
     updateDashboard();
+
+    if (typeof reminderRefresh ==="function"){
+        reminderRefresh();
+
+    }
 }
 
 // Add a task
@@ -282,6 +289,19 @@ filterButtons.forEach(button => {
         displayTasks();
     });
 });
+// Category filter buttons
+const categoryButtons = document.querySelectorAll(".category-filters button");
+for (let btn of categoryButtons){
+    btn.addEventListener("click", function(){
+        currentCategory = btn.dataset.category;
+ for (let b of categoryButtons) {
+            b.classList.remove("active");
+        }
+        btn.classList.add("active");
+                displayTasks();
+       
+    });
+}
 
 // Display saved tasks when the page opens
 loadTasks();
