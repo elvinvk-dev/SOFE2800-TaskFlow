@@ -196,12 +196,14 @@ taskForm.addEventListener("submit", async function(event) {
 
 // Mark task completed or pending
 // Mark task completed or pending (saved in the database)
+
 async function toggleTask(id) {
     const response = await fetch("tasks/complete.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: id })
     });
+
     const data = await response.json();
 
     if (!data.success) {
@@ -209,8 +211,21 @@ async function toggleTask(id) {
         return;
     }
 
+    // Confetti animation when completing a task
+    if (data.task.status === "completed") {
+        if (typeof confetti === "function") {
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 },
+                disableForReducedMotion: true
+            });
+        }
+    }
+
     loadTasks();
 }
+
 
 // Edit an existing task
 // Edit an existing task (saved in the database)
