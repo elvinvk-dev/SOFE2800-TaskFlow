@@ -17,6 +17,7 @@ header {
     color: white;
     padding: 25px;
     text-align: center;
+    position: relative;
 }
 
 header h1 {
@@ -161,18 +162,22 @@ button:hover {
     flex-wrap: wrap;
 }
 
-.filters {
+.filters,
+.category-filters{
     display: flex;
     gap: 8px;
 }
 
-.filters button {
+.filters button,
+.category-filters button{
     background-color: #e5e7eb;
     color: #333;
 }
 
 .filters button:hover,
-.filters button.active {
+.filters button.active,
+.category-filters button:hover,
+.category-filters button.active{
     background-color: #2563eb;
     color: white;
 }
@@ -286,3 +291,21 @@ footer {
         align-items: flex-start;
     }
 }
+/* Logout button */
+
+.logout-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    color: #2563eb;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background-color: #e0e7ff;
+}
+

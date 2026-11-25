@@ -20,10 +20,11 @@ if (!isLoggedIn()) {
     <script src="js/reminders.js" defer></script
 </head>
 <body>
-
+    
     <header>
         <h1>TaskFlow</h1>
         <p>Keep track of your tasks and deadlines</p>
+        <a href="logout.php" class = "logout-btn">Log out</a>
     </header>
 
     <main>
@@ -105,6 +106,20 @@ if (!isLoggedIn()) {
 
                     <button type="button" data-filter="completed">
                         Completed
+                    </button>
+                </div>
+                <div class ="category-filters">
+                    <button type ="button" class="active" data-category="all">
+                    All categories
+                    </button>
+                    <button type ="button" data-category="School">
+                        School
+                    </button>
+                    <button type="button" data-category="Work">
+                        Work
+                    </button>
+                    <button type ="button" data-category="Personal">
+                        Personal
                     </button>
                 </div>
             </div>
